@@ -4,18 +4,11 @@ const fetch = require('node-fetch');
 const hostedGitInfo = require('hosted-git-info');
 const pkg = require('./package.json');
 
-const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
 const POPULAR = ['lodash', 'request', 'express', 'npm', 'debug'];
-const EXAMPLE_URL = `${pkg.homepage}/${pickRandom(POPULAR)}`;
-const README = (
-  '<!doctype html><meta charset="utf-8">' +
-  `<title>${pkg.description}</title>` +
-  `<strong>🚀 ${pkg.description}</strong>` +
-  `<p>Example: <a href="${EXAMPLE_URL}">${EXAMPLE_URL}</a></p>` +
-  '<p>Made with ❤️ by <a href="http://jpadilla.com">Jose Padilla</a><br>' +
-  `Source: <a href="${pkg.repository}">${pkg.repository}</a></p>`
-);
+
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random(arr) * arr.length)];
+}
 
 function unknownHostedUrl(reporUrl) {
   // From https://github.com/npm/npm/blob/master/lib/repo.js
@@ -74,6 +67,16 @@ module.exports = async function(req, res) {
   const pkgName = getPackageName(req.url);
 
   if (!pkgName) {
+    const EXAMPLE_URL = `${pkg.homepage}/${pickRandom(POPULAR)}`;
+    const README = (
+      '<!doctype html><meta charset="utf-8">' +
+      `<title>${pkg.description}</title>` +
+      `<strong>🚀 ${pkg.description}</strong>` +
+      `<p>Example: <a href="${EXAMPLE_URL}">${EXAMPLE_URL}</a></p>` +
+      '<p>Made with ❤️ by <a href="http://jpadilla.com">Jose Padilla</a><br>' +
+      `Source: <a href="${pkg.repository}">${pkg.repository}</a></p>`
+    );
+
     return micro.send(res, 200, README);
   }
 
