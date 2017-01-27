@@ -2,6 +2,11 @@
   "name": "npm-repo",
   "version": "0.0.1",
   "description": "Redirect to an npm package's repository",
+  "homepage": "https://npm-repo.now.sh",
+  "repository": "https://github.com/jpadilla/npm-repo",
+  "bugs": {
+    "url": "https://github.com/jpadilla/npm-repo/issues"
+  },
   "main": "index.js",
   "scripts": {
     "start": "micro",
