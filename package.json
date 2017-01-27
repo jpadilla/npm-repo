@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "hosted-git-info": "^2.1.5",
+    "lru-cache": "^4.0.2",
     "micro": "6.1.0",
     "node-fetch": "^1.6.3"
   }
