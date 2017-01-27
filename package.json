@@ -1,0 +1,26 @@
+{
+  "name": "npm-repo",
+  "version": "0.0.1",
+  "description": "Redirect to an npm package's repository",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro",
+    "now": "now",
+    "deploy": "now deploy -a npm-repo"
+  },
+  "keywords": [],
+  "author": {
+    "name": "José Padilla",
+    "email": "hello@jpadilla.com",
+    "url": "http://jpadilla.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "now": "latest"
+  },
+  "dependencies": {
+    "hosted-git-info": "^2.1.5",
+    "micro": "6.1.0",
+    "node-fetch": "^1.6.3"
+  }
+}
