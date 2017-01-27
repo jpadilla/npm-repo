@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const hostedGitInfo = require('hosted-git-info');
 const pkg = require('./package.json');
 
+let RECENT = [];
 const POPULAR = ['lodash', 'request', 'express', 'npm', 'debug'];
 
 function pickRandom(arr) {
@@ -73,8 +74,16 @@ module.exports = async function(req, res) {
       `<title>${pkg.description}</title>` +
       `<strong>🚀 ${pkg.description}</strong>` +
       `<p>Example: <a href="${EXAMPLE_URL}">${EXAMPLE_URL}</a></p>` +
-      '<p>Made with ❤️ by <a href="http://jpadilla.com">Jose Padilla</a><br>' +
-      `Source: <a href="${pkg.repository}">${pkg.repository}</a></p>`
+      String(
+        (RECENT.length > 0) ?
+          `<p>Recent:
+            ${RECENT.map((r) => (
+              `<a href="${pkg.homepage}/${r}">${r}</a>`
+            )).join(' | ')}
+          </p>` : ''
+      ) +
+      `<p>Made with ❤️ by <a href="${pkg.author.url}">${pkg.author.name}</a>` +
+      `<br>Source: <a href="${pkg.repository}">${pkg.repository}</a></p>`
     );
 
     return micro.send(res, 200, README);
@@ -84,6 +93,12 @@ module.exports = async function(req, res) {
     repositoryUrl = await getPackageRepoUrl(pkgName);
   } catch (err) {
     repositoryUrl = `https://www.npmjs.com/package/${pkgName}`;
+  }
+
+  if (RECENT.length <= 5) {
+    RECENT.push(pkgName);
+  } else {
+    RECENT = [];
   }
 
   res.setHeader('Location', repositoryUrl);
